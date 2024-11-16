@@ -7,6 +7,8 @@ import RenderCondition from "./RenderCondition/RenderCondition";
 import ChangeNumber from "./State/ChangeNumber";
 import ChangeFontSize from "./State/ChangeFontSize";
 import DemoProps from "./Props/DemoProps";
+import RenderWithMap from "./RenderWithMap/RenderWithMap";
+import ProductList from "./RenderWithMap/BTProductList/ProductList";
 
 function App() {
     return (
@@ -22,7 +24,11 @@ function App() {
             </span>
             {/* <ChangeNumber />
             <ChangeFontSize /> */}
-            <DemoProps />
+            {/* <DemoProps /> */}
+
+            {/* <RenderWithMap /> */}
+
+            <ProductList />
         </>
     );
 }

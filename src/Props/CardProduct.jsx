@@ -16,8 +16,12 @@ const CardProduct = (props) => {
     // props.tenSanPham = "abc"; // lỗi
 
     return (
-        <div className="card w-25">
-            <img src="https://picsum.photos/id/1/200/200" alt="" />
+        <div className="card">
+            <img
+                src="https://picsum.photos/id/1/200/200"
+                alt=""
+                className="w-full"
+            />
             <div className="card-body">
                 <h3>{props.tenSanPham}</h3>
                 <p>price</p>

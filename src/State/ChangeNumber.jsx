@@ -33,14 +33,14 @@ const ChangeNumber = () => {
                 <button
                     className="btn btn-dark"
                     onClick={() => {
-                        // let newState = state + 1;
-                        // setState(newState);
+                        let newState = state + 1;
+                        setState(newState);
 
                         // React là SPA vì vậy tất cả cpn sẽ dùng chung trên 1 trang html, khi sử dụng Dom sẽ khó quản lý sự thay đổi trên giao diện, đang cần thay đổi chỗ nào
-                        let number =
-                            +document.querySelector("#number").innerHTML;
-                        document.querySelector("#number").innerHTML =
-                            number + 1;
+                        // let number =
+                        //     +document.querySelector("#number").innerHTML;
+                        // document.querySelector("#number").innerHTML =
+                        //     number + 1;
                     }}
                 >
                     +

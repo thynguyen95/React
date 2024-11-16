@@ -6,6 +6,7 @@ import DemoEvent from "./Event/DemoEvent";
 import RenderCondition from "./RenderCondition/RenderCondition";
 import ChangeNumber from "./State/ChangeNumber";
 import ChangeFontSize from "./State/ChangeFontSize";
+import DemoProps from "./Props/DemoProps";
 
 function App() {
     return (
@@ -19,8 +20,9 @@ function App() {
             <span className="mx-4" id="number">
                 1
             </span>
-            <ChangeNumber />
-            <ChangeFontSize />
+            {/* <ChangeNumber />
+            <ChangeFontSize /> */}
+            <DemoProps />
         </>
     );
 }

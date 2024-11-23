@@ -9,6 +9,8 @@ import ChangeFontSize from "./State/ChangeFontSize";
 import DemoProps from "./Props/DemoProps";
 import RenderWithMap from "./RenderWithMap/RenderWithMap";
 import ProductList from "./RenderWithMap/BTProductList/ProductList";
+import LiftingStateUp from "./LiftingStateUp/LiftingStateUp";
+import ExCarStore from "./LiftingStateUp/ExCarStore/ExCarStore";
 
 function App() {
     return (
@@ -28,7 +30,11 @@ function App() {
 
             {/* <RenderWithMap /> */}
 
-            <ProductList />
+            {/* <ProductList /> */}
+
+            <LiftingStateUp />
+
+            {/* <ExCarStore /> */}
         </>
     );
 }

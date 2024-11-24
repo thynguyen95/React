@@ -18,7 +18,7 @@ const Cart = (props) => {
                             {product.maSP}
                         </Table.Cell>
                         <Table.Cell>
-                            <img src={product.hinhAnh} alt="" />
+                            <img width={100} src={product.hinhAnh} alt="" />
                         </Table.Cell>
                         <Table.Cell> {product.tenSP}</Table.Cell>
                         <Table.Cell>{product.giaBan}</Table.Cell>
@@ -67,11 +67,38 @@ const Cart = (props) => {
         });
     };
 
+    const calculatorToTal = () => {
+        // cách 1:
+        let total = 0;
+        for (let item of cart) {
+            total += item.soLuong * item.giaBan;
+        }
+        return total.toLocaleString();
+
+        // cách 2:
+        // const total = cart.reduce((total, item, index) => {
+        //     total += item.soLuong * item.giaBan;
+        //     return total;
+        // }, 0);
+    };
+
+    const countProduct = () => {
+        const totalQuality = cart.reduce((totalProduct, item, index) => {
+            totalProduct += item.soLuong;
+
+            return totalProduct;
+        }, 0);
+
+        return totalQuality;
+    };
+
     return (
         <div className="container mx-auto">
             <h1 className="text-center text-red-500 text-4xl">Cart</h1>
 
-            <h3>giỏ hàng: {cart.length}</h3>
+            <h3>
+                giỏ hàng: {countProduct()} - Tổng tiền: {calculatorToTal()}
+            </h3>
 
             <div className="overflow-x-auto">
                 <Table>

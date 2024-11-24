@@ -11,6 +11,8 @@ import RenderWithMap from "./RenderWithMap/RenderWithMap";
 import ProductList from "./RenderWithMap/BTProductList/ProductList";
 import LiftingStateUp from "./LiftingStateUp/LiftingStateUp";
 import ExCarStore from "./LiftingStateUp/ExCarStore/ExCarStore";
+import ShoePage from "./ApiDemo/ShoePage";
+import DemoLoginForm from "./FormDemo/DemoLoginForm";
 
 function App() {
     return (
@@ -32,9 +34,13 @@ function App() {
 
             {/* <ProductList /> */}
 
-            <LiftingStateUp />
+            {/* <LiftingStateUp /> */}
 
             {/* <ExCarStore /> */}
+
+            {/* <ShoePage /> */}
+
+            <DemoLoginForm />
         </>
     );
 }

@@ -107,6 +107,17 @@ const LiftingStateUp = () => {
 
         if (sp) {
             sp.soLuong += quality;
+
+            if (sp.soLuong === 0) {
+                if (window.confirm("Bạn có muốn xóa ko?")) {
+                    deleteProductCart(sp.maSP);
+                } else {
+                    sp.soLuong = 1;
+                }
+
+                // trong logic xóa đã có setState lại, khi call method xóa xong state đã được set nên return để dừng code luôn, nếu setState lại lần nữa sẽ thừa
+                return;
+            }
         }
 
         // setState

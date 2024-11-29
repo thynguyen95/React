@@ -13,35 +13,48 @@ import LiftingStateUp from "./LiftingStateUp/LiftingStateUp";
 import ExCarStore from "./LiftingStateUp/ExCarStore/ExCarStore";
 import ShoePage from "./ApiDemo/ShoePage";
 import DemoLoginForm from "./FormDemo/DemoLoginForm";
+import DemoLoginFormik from "./FormDemo/DemoLoginFormik";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Cart from "./pages/Cart";
+import HeaderRouter from "./components/HeaderRouter";
+import HomePageMaster from "./MasterPage/HomePageMaster";
+import UserPageMaster from "./MasterPage/UserPageMaster";
+
+// cấu hình react-router-dom
 
 function App() {
     return (
-        <>
-            {/* <HeaderHome />
-            <Card /> */}
-            {/* <Databinding /> */}
-            {/* <DemoEvent /> */}
-            {/* <RenderCondition /> */}
+        <BrowserRouter>
+            <Routes>
+                {/* route base  */}
 
-            <span className="mx-4" id="number">
-                1
-            </span>
-            {/* <ChangeNumber />
-            <ChangeFontSize /> */}
-            {/* <DemoProps /> */}
+                {/* định nghĩa trang chủ  */}
+                {/* <Route path="" element={<Home />} />
+                <Route index element={<Home />} />
 
-            {/* <RenderWithMap /> */}
+                <Route path="home" element={<Home />} />
+                <Route path="about" element={<About />} />
+                <Route path="cart" element={<Cart />} /> */}
 
-            {/* <ProductList /> */}
+                {/* nesting router */}
+                {/* <Route index element={<HomePageMaster />} /> */}
+                {/* <Route path="/home" element={<HomePageMaster />} /> */}
 
-            {/* <LiftingStateUp /> */}
+                <Route path="" element={<HomePageMaster />}>
+                    <Route index element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/cart" element={<Cart />} />
+                </Route>
 
-            {/* <ExCarStore /> */}
-
-            {/* <ShoePage /> */}
-
-            <DemoLoginForm />
-        </>
+                <Route path="user" element={<UserPageMaster />}>
+                    <Route path="login" element={<DemoLoginForm />} />
+                    <Route path="register" element={<DemoLoginFormik />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 

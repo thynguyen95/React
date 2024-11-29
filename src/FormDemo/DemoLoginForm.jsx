@@ -6,6 +6,7 @@ const DemoLoginForm = () => {
     const [userLogin, setUserLogin] = useState({
         email: "", //đặt key giống với name của input
         password: "",
+        phone: "",
     });
     console.log("userLogin", userLogin);
 
@@ -13,16 +14,34 @@ const DemoLoginForm = () => {
     const [error, setError] = useState({
         email: "",
         password: "",
+        phone: "",
     });
 
     const handleSubmit = (e) => {
         e.preventDefault(); // chặn reload browser
-        console.log("submit");
 
         // không dùng như vầy vì ko kiểm soát được id, dễ bị đụng chỗ khác
         // const userLogin = {
         //     email: document.querySelector('#email1').value
         // }
+
+        // chặn sumbit không hợp lệ
+        // hợp lệ khi không có error và input nhập vào hợp lệ
+        for (let key in error) {
+            if (error[key] !== "") {
+                // chỉ cần 1 lỗi xảy ra (objectError có ít nhất 1 trường có điều kiện)
+                return;
+            }
+        }
+
+        for (let key in userLogin) {
+            if (userLogin[key] === "" && key !== "phone") {
+                return;
+            }
+        }
+
+        // xử lý submit
+        console.log("submit");
     };
 
     const handleChangeInput = (e) => {
@@ -43,9 +62,18 @@ const DemoLoginForm = () => {
                 case "email": {
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                    if (emailRegex.test.value) {
+                    if (!emailRegex.test(value)) {
                         messError = `${name} is invalid`;
                     }
+                    break;
+                }
+                case "phone": {
+                    const regexPhone = /^(09|03|07|08|02|04|06|05|09)[0-9]{8}$/;
+
+                    if (!regexPhone.test(value)) {
+                        messError = `${name} is invalid`;
+                    }
+
                     break;
                 }
                 default:
@@ -99,6 +127,34 @@ const DemoLoginForm = () => {
                         {error.email && (
                             <p className="text-red-500 text-2xl">
                                 {error.email}
+                            </p>
+                        )}
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <Label htmlFor="phone1" value="Your phone" />
+                        </div>
+                        <TextInput
+                            id="phone1"
+                            type="phone"
+                            name="phone" // thêm trường name
+                            placeholder="090337773"
+                            data-type="phone"
+                            required
+                            // cách1 : làm quen
+                            // onChange={(e) => {
+                            //     setUserLogin({
+                            //         ...userLogin,
+                            //         phone: e.target.value,
+                            //     });
+                            // }}
+
+                            onChange={handleChangeInput}
+                        />
+                        {/* {error.phone ? <p className="text-red-500 text-2xl">{error.phone}</p> : ''} */}
+                        {error.phone && (
+                            <p className="text-red-500 text-2xl">
+                                {error.phone}
                             </p>
                         )}
                     </div>

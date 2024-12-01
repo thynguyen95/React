@@ -3,9 +3,16 @@ import { Outlet } from "react-router-dom";
 
 const UserPageMaster = () => {
     return (
-        <div className="bg-black h-screen text-white">
-            <h1>UserPageMaster</h1>
-            <Outlet />
+        <div
+            className="h-screen "
+            style={{
+                background: "url(https://picsum.photos/2000/2000)",
+                backgroundSize: "cover",
+            }}
+        >
+            <div className="flex items-center justify-center h-full bg-black bg-opacity-15">
+                <Outlet />
+            </div>
         </div>
     );
 };

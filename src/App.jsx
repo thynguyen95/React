@@ -30,6 +30,10 @@ import Profile from "./pages/Profile";
 import ForgotPass from "./pages/ForgotPass";
 import Detail from "./LiftingStateUp/Detail";
 import DetailProduct from "./pages/DetailProduct";
+import Search from "./pages/Search";
+import AddProduct from "./pages/ProductManagement/AddProduct";
+import EditProduct from "./pages/ProductManagement/EditProduct";
+import Product from "./pages/ProductManagement/Product";
 
 // cấu hình react-router-dom
 
@@ -57,6 +61,7 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="profile" element={<Profile />} />
+                    <Route path="search" element={<Search />} />
                     <Route path="detail">
                         <Route path=":prodID" element={<DetailProduct />} />
                     </Route>
@@ -79,8 +84,19 @@ function App() {
 
                 <Route path="admin" element={<AdminMasterPage />}>
                     <Route index element={<UserManagement />} />
-                    <Route path="user" element={<UserManagement />} />
-                    <Route path="product" element={<ProductManagement />} />
+                    <Route path="usermanagement" element={<UserManagement />} />
+                    <Route
+                        path="productmanagement"
+                        element={<ProductManagement />}
+                    />
+                    <Route path="product" element={<Product />} />
+                    <Route path="product/:id" element={<Product />} />
+
+                    <Route path="add-product" element={<AddProduct />} />
+                    <Route path="edit-product">
+                        <Route path=":id" element={<EditProduct />} />
+                    </Route>
+
                     <Route path="*" element={<Page404 />} />
                 </Route>
             </Routes>

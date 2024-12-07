@@ -4,7 +4,7 @@ import { NavLink, useParams } from "react-router-dom";
 
 const DetailProduct = () => {
     const [proDetail, setProDetail] = useState({});
-    const [transform, setTransform] = useState("rotate(180deg)");
+    const [transform, setTransform] = useState("rotate(0deg)");
 
     const param = useParams(); //global state, bất kì cpn nào cũng lấy được
     console.log("param: ", param);
@@ -33,30 +33,37 @@ const DetailProduct = () => {
                 <div className="w-1/3 rounded-t-lg h-96 md:h-auto md:rounded-none md:rounded-s-lg">
                     <img
                         className="object-cover"
-                        style={{ transform: transform }}
+                        style={{
+                            transform: transform,
+                            transition: "0.3s all linear",
+                        }}
                         src={proDetail.image}
                         alt
                     />
-                    <div className="grid grid-cols-4">
+                    <div className="grid grid-cols-4 gap-2">
                         {proDetail.detaildetailedImages?.map((deg, index) => {
+                            console.log("deg: ", deg, transform);
                             return (
-                                <img
+                                <div
                                     key={index}
-                                    className="rounded-t-lg"
+                                    className="rounded-lg"
                                     style={{
-                                        transform: deg,
                                         border: `1px solid ${
                                             deg === transform
                                                 ? "orange"
                                                 : "gray"
                                         }`,
                                     }}
-                                    src={proDetail.image}
-                                    alt
-                                    onClick={() => {
-                                        setTransform(deg);
-                                    }}
-                                />
+                                >
+                                    <img
+                                        style={{ transform: deg }}
+                                        src={proDetail.image}
+                                        alt
+                                        onClick={() => {
+                                            setTransform(deg);
+                                        }}
+                                    />
+                                </div>
                             );
                         })}
                     </div>

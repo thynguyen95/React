@@ -8,12 +8,18 @@ const AdminMasterPage = () => {
                 <nav>
                     <ul>
                         <li className="my-6">
-                            <NavLink to={"/admin/user"} className={"p-4"}>
+                            <NavLink
+                                to={"/admin/usermanagement"}
+                                className={"p-4"}
+                            >
                                 User
                             </NavLink>
                         </li>
                         <li className="my-5">
-                            <NavLink to={"/admin/product"} className={"p-4"}>
+                            <NavLink
+                                to={"/admin/productmanagement"}
+                                className={"p-4"}
+                            >
                                 Product
                             </NavLink>
                         </li>
@@ -22,7 +28,7 @@ const AdminMasterPage = () => {
             </aside>
             <main className="w-5/6">
                 <header className="bg-blue-400 p-4">header</header>
-                <div className="content">
+                <div className="content p-4">
                     <Outlet />
                 </div>
             </main>

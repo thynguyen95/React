@@ -1,12 +1,15 @@
 import axios from "axios";
 import { Button } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { NavLink, useSearchParams } from "react-router-dom";
+import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 
 const ProductManagement = () => {
     const [arrProduct, setArrProduct] = useState([]);
     const [search, setSearch] = useSearchParams();
     const kw = search.get("prodName");
+
+    const location = useLocation();
+    console.log("location: ", location);
 
     const getAllProduct = () => {
         console.log("getAllProduct");

@@ -15,7 +15,7 @@ const ChangeNumber = () => {
     const [state, setState] = useState(20);
 
     return (
-        <div className="container">
+        <div className="container mx-auto">
             <h1 className="text-red-500">Change Number</h1>
 
             <div>

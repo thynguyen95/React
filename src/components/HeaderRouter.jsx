@@ -1,3 +1,4 @@
+import { Dropdown } from "flowbite-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -81,18 +82,7 @@ const HeaderRouter = () => {
                                     About
                                 </NavLink>
                             </li>
-                            <li>
-                                <NavLink
-                                    to="/cart"
-                                    className={(props) =>
-                                        props.isActive
-                                            ? "text-red-500"
-                                            : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                                    }
-                                >
-                                    cart
-                                </NavLink>
-                            </li>
+
                             <li>
                                 <NavLink
                                     to="/user/login"
@@ -117,6 +107,45 @@ const HeaderRouter = () => {
                                     }
                                 >
                                     search
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/admin"
+                                    end
+                                    className={(props) =>
+                                        props.isActive
+                                            ? "text-red-500"
+                                            : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                    }
+                                >
+                                    admin
+                                </NavLink>
+                            </li>
+                            <li>
+                                <Dropdown label="Redux" inline>
+                                    <Dropdown.Item>
+                                        <NavLink to={"/redux/change-number"}>
+                                            Change number
+                                        </NavLink>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item>
+                                        <NavLink to={"/redux/change-fontsize"}>
+                                            Change font size
+                                        </NavLink>
+                                    </Dropdown.Item>
+                                </Dropdown>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/cart"
+                                    className={(props) =>
+                                        props.isActive
+                                            ? "text-red-500"
+                                            : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                    }
+                                >
+                                    cart(3)
                                 </NavLink>
                             </li>
                         </ul>

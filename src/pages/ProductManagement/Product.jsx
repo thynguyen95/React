@@ -70,7 +70,7 @@ const Product = () => {
                     alert("update thành công");
 
                     // update thành công chuyển về trang quản lý
-                    navigate("../productmanagement");
+                    navigate("../productmanagement", { state: "abc" });
                 })
                 .catch((err) => {
                     console.log("err: ", err);

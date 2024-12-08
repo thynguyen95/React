@@ -1,9 +1,13 @@
 import { Button } from "flowbite-react";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProductAction } from "../redux/reducers/cartReducer";
 
 const Cart = () => {
-    const cartStore = useSelector((state) => state.cartReducer);
+    // const cartStore = useSelector((state) => state.cartReducer);
+    const cartStore = useSelector((state) => state.cartSliceReducer.cart);
+
+    const dispatch = useDispatch();
 
     return (
         <div className="container mx-auto">
@@ -37,7 +41,7 @@ const Cart = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cartStore.map((item) => {
+                        {cartStore?.map((item) => {
                             return (
                                 <tr
                                     key={item.id}
@@ -66,7 +70,18 @@ const Cart = () => {
                                     <td className="px-6 py-4">
                                         {item.price * item.quality}
                                     </td>
-                                    <td className="px-6 py-4">
+                                    <td
+                                        className="px-6 py-4"
+                                        onClick={() => {
+                                            // tạo ra action
+                                            const action = deleteProductAction(
+                                                item.id
+                                            );
+
+                                            // dispatch action
+                                            dispatch(action);
+                                        }}
+                                    >
                                         <Button>Xóa</Button>
                                     </td>
                                 </tr>

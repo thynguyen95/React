@@ -3,6 +3,7 @@ import { Button } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { addProductAction } from "../redux/reducers/cartReducer";
 
 const Home = () => {
     const [arrProduct, setArrProduct] = useState([]);
@@ -63,13 +64,30 @@ const Home = () => {
                                 </NavLink>
                                 <Button
                                     onClick={() => {
-                                        // tạo ra action chứa dữ liệu đưa lên store
-                                        const action = {
-                                            type: "ADD_PRODUCT",
-                                            payload: { ...item, quality: 1 },
-                                        };
+                                        // cách 1:
+                                        // // tạo ra action chứa dữ liệu đưa lên store
+                                        // const action = {
+                                        //     type: "ADD_PRODUCT",
+                                        //     payload: { ...item, quality: 1 },
+                                        // };
 
-                                        // đưa lên redux
+                                        // // đưa lên redux
+                                        // dispatch(action);
+
+                                        // cách 2: dùng redux slice
+                                        // 2.1 tạo action slice thủ công
+                                        // const action = {
+                                        //     // type: tenReducer/tenMethod
+                                        //     type: "cartReducer/addProductAction",
+                                        //     payload: { ...item, quality: 1 },
+                                        // };
+
+                                        // 2.2 tạo action slice bằng hàm export
+                                        const action = addProductAction({
+                                            ...item,
+                                            quality: 1,
+                                        });
+
                                         dispatch(action);
                                     }}
                                 >

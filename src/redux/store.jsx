@@ -3,7 +3,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { numberReducer } from "./reducers/numberReducer";
 import { fontSizeReducer } from "./reducers/fontSizeReducer";
-import { cartReducer } from "./reducers/cartReducer";
+import cartReducer from "./reducers/cartReducer";
 
 const cartDefault = [
     {
@@ -53,7 +53,49 @@ export const store = configureStore({
         // BReducer: (state = B) => state,
         numberReducer: numberReducer, // cách 2 rút gọn, tách logic
         fontSizeReducer: fontSizeReducer,
-        cartReducer: cartReducer,
+        cartReducer: (cart = cartDefault, action) => {
+            const { type, payload } = action;
+
+            if (type === "ADD_PRODUCT") {
+                // kiểm tra sp đã có trong giỏ hàng chưa
+                const itemIndex = cart.findIndex(
+                    (item) => item.id === payload.id
+                );
+
+                if (itemIndex !== -1) {
+                    console.log("itemIndex: ", itemIndex);
+                    // nếu sản phẩm đã có, update số lượng
+                    // tạo bản sao để update số lượng, dùng map để trả về 1 array mới để tránh các lỗi về tham chiếu
+                    // cách 1
+
+                    const updatedCart = [...cart]; // sao chép cart
+                    updatedCart[itemIndex] = {
+                        ...updatedCart[itemIndex], // Sao chép phần tử item bên trong cart để giữ tính bất biến
+                        quality: updatedCart[itemIndex].quality + 1, // Cập nhật thuộc tính quality
+                    };
+                    return updatedCart;
+
+                    // cách 2:
+                    // return cart.map((item) =>
+                    //     item.id === payload.id
+                    //         ? { ...item, quality: item.quality + 1 }
+                    //         : item
+                    // );
+                } else {
+                    return [...cart, payload];
+                }
+
+                // cart.push(payload); không dùng cách này vì thay đổi trực tiếp state cart
+                // newCart.push(payload);
+
+                // nếu không kiểm tra tồn tại dùng cách này
+                let newCart = [...cart, payload];
+                return newCart;
+            }
+
+            return cart;
+        },
+        cartSliceReducer: cartReducer,
     },
 });
 

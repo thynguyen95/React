@@ -68,7 +68,7 @@ const Home = () => {
                                         // // tạo ra action chứa dữ liệu đưa lên store
                                         // const action = {
                                         //     type: "ADD_PRODUCT",
-                                        //     payload: { ...item, quality: 1 },
+                                        //     payload: { ...item, quantityCart: 1 },
                                         // };
 
                                         // // đưa lên redux
@@ -79,13 +79,13 @@ const Home = () => {
                                         // const action = {
                                         //     // type: tenReducer/tenMethod
                                         //     type: "cartReducer/addProductAction",
-                                        //     payload: { ...item, quality: 1 },
+                                        //     payload: { ...item, quantityCart: 1 },
                                         // };
 
                                         // 2.2 tạo action slice bằng hàm export
                                         const action = addProductAction({
                                             ...item,
-                                            quality: 1,
+                                            quantityCart: 1,
                                         });
 
                                         dispatch(action);

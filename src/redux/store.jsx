@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { numberReducer } from "./reducers/numberReducer";
 import { fontSizeReducer } from "./reducers/fontSizeReducer";
 import cartReducer from "./reducers/cartReducer";
+import userReducer from "./reducers/userReducer";
 
 const cartDefault = [
     {
@@ -87,15 +88,13 @@ export const store = configureStore({
 
                 // cart.push(payload); không dùng cách này vì thay đổi trực tiếp state cart
                 // newCart.push(payload);
-
-                // nếu không kiểm tra tồn tại dùng cách này
-                let newCart = [...cart, payload];
-                return newCart;
             }
 
-            return cart;
+            // nếu không kiểm tra tồn tại dùng cách này
+            return [...cart];
         },
         cartSliceReducer: cartReducer,
+        userReducer: userReducer,
     },
 });
 

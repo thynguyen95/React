@@ -1,7 +1,10 @@
 import { Button } from "flowbite-react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProductAction } from "../redux/reducers/cartReducer";
+import {
+    changeQuantityProductAction,
+    deleteProductAction,
+} from "../redux/reducers/cartReducer";
 
 const Cart = () => {
     // const cartStore = useSelector((state) => state.cartReducer);
@@ -59,16 +62,47 @@ const Cart = () => {
                                     <td className="px-6 py-4">{item.name}</td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center">
-                                            <Button>-</Button>
+                                            <Button
+                                                onClick={() => {
+                                                    // B1: tạo ra action bằng hàm action được export từ reducer slice
+                                                    const payload = {
+                                                        id: item.id,
+                                                        quantity: -1,
+                                                    };
+                                                    const action =
+                                                        changeQuantityProductAction(
+                                                            payload
+                                                        );
+
+                                                    // đưa action lên reducer
+                                                    dispatch(action);
+                                                }}
+                                            >
+                                                -
+                                            </Button>
                                             <span className="text-2xl mx-3">
-                                                {item.quality}
+                                                {item.quantityCart}
                                             </span>
-                                            <Button>+</Button>
+                                            <Button
+                                                onClick={() => {
+                                                    const payload = {
+                                                        id: item.id,
+                                                        quantity: 1,
+                                                    };
+                                                    const action =
+                                                        changeQuantityProductAction(
+                                                            payload
+                                                        );
+                                                    dispatch(action);
+                                                }}
+                                            >
+                                                +
+                                            </Button>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">{item.price}</td>
                                     <td className="px-6 py-4">
-                                        {item.price * item.quality}
+                                        {item.price * item.quantityCart}
                                     </td>
                                     <td
                                         className="px-6 py-4"

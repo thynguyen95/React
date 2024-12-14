@@ -1,7 +1,9 @@
+import axios from "axios";
 import { Button, Label, TextInput } from "flowbite-react";
 import { useFormik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { setCookie, TOKEN, USER_LOGIN } from "../util/setting";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,19 +16,42 @@ const Login = () => {
         onSubmit: (values) => {
             console.log("values: ", values);
 
-            if (
-                values.email === "cybersoft" &&
-                values.password === "cybersoft"
-            ) {
-                // chuyển hướng profile
+            // if (
+            //     values.email === "cybersoft" &&
+            //     values.password === "cybersoft"
+            // ) {
+            //     // chuyển hướng profile
 
-                navigate("/profile");
-            } else {
-                // chuyển hướng forgot
-                // navigate("../forgot-pass");
-                // navigate("/user/forgot-pass");
-                navigate("/user/forgot-pass", { replace: true }); //thay thế route hiện tại = route tương ứng thường xài cho các page thanh toán
-            }
+            //     navigate("/profile");
+            // } else {
+            //     // chuyển hướng forgot
+            //     // navigate("../forgot-pass");
+            //     // navigate("/user/forgot-pass");
+            //     navigate("/user/forgot-pass", { replace: true }); //thay thế route hiện tại = route tương ứng thường xài cho các page thanh toán
+            // }
+
+            // xử lý gửi dữ liệu về api của backend để lấy token lưu vào máy client
+            axios({
+                url: "https://apistore.cybersoft.edu.vn/api/Users/signin",
+                method: "POST",
+                data: values,
+            })
+                .then((res) => {
+                    console.log("res: ", res);
+
+                    // lưu token vào client (localStorage, cookie)
+                    // localStorage(server không lấy được )
+                    const token = res.data.content.accessToken;
+                    const userLogin = JSON.stringify(res.data.content);
+                    localStorage.setItem(TOKEN, token);
+                    localStorage.setItem(USER_LOGIN, userLogin);
+
+                    // lưu vào cookie
+                    setCookie(TOKEN, token, 7);
+                })
+                .catch((err) => {
+                    console.log("err: ", err);
+                });
         },
     });
     return (

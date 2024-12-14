@@ -44,6 +44,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import ChangeNumberRedux from "./pages/ReduxDemo/ChangeNumberRedux";
 import ChangFontSizeRedux from "./pages/ReduxDemo/ChangFontSizeRedux";
+import Register from "./pages/Register";
 
 // cấu hình react-router-dom
 
@@ -107,7 +108,7 @@ function App() {
                         {/* demo hook navigate */}
                         <Route path="login" element={<Login />} />
 
-                        <Route path="register" element={<DemoLoginFormik />} />
+                        <Route path="register" element={<Register />} />
                         <Route path="forgot-pass" element={<ForgotPass />} />
 
                         {/* <Route path="*" element={<Page404 />} /> */}

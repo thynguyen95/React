@@ -46,12 +46,17 @@ import ChangeNumberRedux from "./pages/ReduxDemo/ChangeNumberRedux";
 import ChangFontSizeRedux from "./pages/ReduxDemo/ChangFontSizeRedux";
 import Register from "./pages/Register";
 
-// cấu hình react-router-dom
+// cấu hình CustomBrowserHistory
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { navigateHistory } from "./services/configURL";
+import Spinner from "./components/Spinner";
 
 function App() {
     return (
         <Provider store={store}>
-            <BrowserRouter>
+            <Spinner />
+
+            <HistoryRouter history={navigateHistory}>
                 <Routes>
                     {/* route base  */}
 
@@ -140,7 +145,7 @@ function App() {
                         <Route path="*" element={<Page404 />} />
                     </Route>
                 </Routes>
-            </BrowserRouter>
+            </HistoryRouter>
         </Provider>
     );
 }

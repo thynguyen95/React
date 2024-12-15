@@ -3,7 +3,8 @@ import { Button, Label, TextInput } from "flowbite-react";
 import { useFormik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { setCookie, TOKEN, USER_LOGIN } from "../util/setting";
+import { TOKEN, USER_LOGIN } from "../services/configURL";
+import { setCookie } from "../util/setting";
 
 const Login = () => {
     const navigate = useNavigate();

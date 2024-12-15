@@ -1,24 +1,30 @@
 import { Button, Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useParams } from "react-router-dom";
+import { getProductDetailByIdActionThunk } from "../redux/reducers/productReducer";
 
 const DetailProduct = () => {
-    const [proDetail, setProDetail] = useState({});
+    // const [proDetail, setProDetail] = useState({});
+    const { proDetail } = useSelector((state) => state.productReducer);
+    const dispatch = useDispatch();
     const [transform, setTransform] = useState("rotate(0deg)");
 
     const param = useParams(); //global state, bất kì cpn nào cũng lấy được
     console.log("param: ", param);
 
     const getProductById = async () => {
-        const res = await fetch(
-            `https://apistore.cybersoft.edu.vn/api/Product/getbyid?id=${param.prodID}`
-        );
+        // const res = await fetch(
+        //     `https://apistore.cybersoft.edu.vn/api/Product/getbyid?id=${param.prodID}`
+        // );
+        // const data = await res.json();
+        // console.log("data: ", data.content);
+        // // setState sau khi lấy dữ liệu từ api về
+        // setProDetail(data.content);
 
-        const data = await res.json();
-        console.log("data: ", data.content);
-
-        // setState sau khi lấy dữ liệu từ api về
-        setProDetail(data.content);
+        // tạo ra actionThunk (là 1 hàm có tham số là dispatch)
+        const actionThunk = getProductDetailByIdActionThunk(param.prodID);
+        dispatch(actionThunk);
     };
 
     useEffect(() => {

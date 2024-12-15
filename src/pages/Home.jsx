@@ -1,38 +1,62 @@
 import axios from "axios";
 import { Button } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { addProductAction } from "../redux/reducers/cartReducer";
+import { http } from "../services/configURL";
+import Spinner from "../components/Spinner";
+import { getProductApiActionThunk } from "../redux/reducers/productReducer";
 
 const Home = () => {
-    const [arrProduct, setArrProduct] = useState([]);
+    // const [arrProduct, setArrProduct] = useState([]);
+
+    // lấy arrProduc từ redux
+    const { arrProduct } = useSelector((state) => state.productReducer);
+
     // hook dispatch dùng để đưa dữ liệu lên store(redux) thông qua biến action(type, payload)
     const dispatch = useDispatch();
 
+    // spinner
+    const [isLoading, setIsLoading] = useState(false);
+
     const getAllProduct = () => {
-        axios({
-            url: "https://apistore.cybersoft.edu.vn/api/Product",
-            method: "GET",
-        })
-            .then((res) => {
-                console.log("res: ", res);
-                setArrProduct(res.data.content);
-            })
-            .catch((err) => {
-                console.log("err: ", err);
-            });
+        // http.get("https://apistore.cybersoft.edu.vn/api/Product")
+        //     .then((res) => {
+        //         console.log("res: ", res);
+        //         setArrProduct(res.data.content);
+        //         setIsLoading(false);
+        //     })
+        //     .catch((err) => {
+        //         console.log("err: ", err);
+        //         setIsLoading(false);
+        //     });
+
+        /*
+            actionPayload: {type, payload}
+            actionThunk: (dispatch2) => {
+                tự định nghĩa nội dung để có dữ liệu dispatch 2 lên store    
+            }
+        */
+        const actionThunk = getProductApiActionThunk();
+
+        dispatch(actionThunk);
     };
 
     useEffect(() => {
+        // setIsLoading(true);
+
         getAllProduct();
     }, []);
 
     return (
         <div className="container mx-auto">
+            {isLoading ? <Spinner /> : ""}
+
             <h3 className="mt-5 text-center text-red-500 text-4xl mb-5">
                 Danh sách Sản phẩm
             </h3>
+
             <div className="grid grid-cols-3 gap-2">
                 {arrProduct?.map((item) => {
                     return (

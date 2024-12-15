@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { http, TOKEN } from "../util/setting";
 import { useNavigate } from "react-router-dom";
+import { http, TOKEN } from "../services/configURL";
 
 const Profile = () => {
     const [profile, setProfile] = useState({});
@@ -12,7 +12,7 @@ const Profile = () => {
         //     url: "https://apistore.cybersoft.edu.vn/api/Users/getProfile",
         //     method: "POST",
         //     headers: {
-        //         Authorization: localStorage.getItem(TOKEN),
+        //     Authorization: localStorage.getItem(TOKEN),
         //     },
         // })
         //     .then((res) => {

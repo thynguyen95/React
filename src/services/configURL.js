@@ -6,16 +6,18 @@ import {
     disableLoadingAction,
     enableLoadingAction,
 } from "../redux/reducers/spinnerReducer";
+import { DOMAIN, TOKEN, TOKEN_CYBERSOFT } from "./constants";
 // cấu hình chuyển hướng trang khi không dùng hook
 export const navigateHistory = createBrowserHistory();
 
-export const TOKEN = "accessToken";
-export const USER_LOGIN = "userLogin";
+//chuyển ra file riêng để ko bị lỗi
+// export const TOKEN = "accessToken";
+// export const USER_LOGIN = "userLogin";
 
 // setup interceptor(middleware) cho tất cả các request(thông tin gửi đi đến server) và response (kết quả nhận từ server)
-const DOMAIN = "https://apistore.cybersoft.edu.vn";
-const TOKEN_CYBERSOFT =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA3NyIsIkhldEhhblN0cmluZyI6IjA1LzA2LzIwMjUiLCJIZXRIYW5UaW1lIjoiMTc0OTA4MTYwMDAwMCIsIm5iZiI6MTcyMzIyMjgwMCwiZXhwIjoxNzQ5MjI5MjAwfQ.5EInOZxm36n_2HNZsS3kKMLXRYhND8W2KycBygtOP8I";
+// const DOMAIN = "https://apistore.cybersoft.edu.vn";
+// const TOKEN_CYBERSOFT =
+//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA3NyIsIkhldEhhblN0cmluZyI6IjA1LzA2LzIwMjUiLCJIZXRIYW5UaW1lIjoiMTc0OTA4MTYwMDAwMCIsIm5iZiI6MTcyMzIyMjgwMCwiZXhwIjoxNzQ5MjI5MjAwfQ.5EInOZxm36n_2HNZsS3kKMLXRYhND8W2KycBygtOP8I";
 
 export const http = axios.create({
     baseURL: DOMAIN,
@@ -24,7 +26,18 @@ export const http = axios.create({
 
 // cấu hình cho request
 http.interceptors.request.use((request) => {
-    store.dispatch(enableLoadingAction(true));
+    // không bật loading ở 1 vài case không cần thiết
+    // cách 1: kiểm tra url
+    // if (!request.url.includes("/signin")) {
+    //     store.dispatch(enableLoadingAction(true));
+    // }
+
+    // cách 2: tùy chỉnh cấu hình cho từng request
+    // skipLoading: tự đặt tên, truyền param này ở nơi call api ko cần bật loading
+    if (!request.skipLoading) {
+        store.dispatch(enableLoadingAction(true));
+    }
+
     request.headers = {
         ...request.headers, // giữ lại các api có header riêng
         Authorization: localStorage.getItem(TOKEN), // thêm phần chung authorize
@@ -58,31 +71,31 @@ http.interceptors.response.use(
         store.dispatch(disableLoadingAction(false));
 
         // kiểm tra token hợp lệ
-        const jwtDecodeToken = decodeToken(TOKEN);
-        console.log("jwtDecodeToken: ", jwtDecodeToken);
+        // const jwtDecodeToken = decodeToken(TOKEN);
+        // console.log("jwtDecodeToken: ", jwtDecodeToken);
 
-        if (jwtDecodeToken) {
-            const isExpired = isTokenExpired(localStorage.getItem(TOKEN));
-            console.log("isExpired: ", isExpired);
+        // if (jwtDecodeToken) {
+        //     const isExpired = isTokenExpired(localStorage.getItem(TOKEN));
+        //     console.log("isExpired: ", isExpired);
 
-            if (isExpired) {
-                http.post(
-                    "https://apistore.cybersoft.edu.vn/api/Users/RefeshToken"
-                )
-                    .then((response) => {
-                        console.log("response: ", response);
-                        localStorage.setItem(
-                            TOKEN,
-                            response.data.content.accessToken
-                        );
-                        navigateHistory.push(window.location.pathname);
-                    })
-                    .catch((err) => {
-                        console.log("err: ", err);
-                        navigateHistory.push("/user/login");
-                    });
-            }
-        }
+        //     if (isExpired) {
+        //         http.post(
+        //             "https://apistore.cybersoft.edu.vn/api/Users/RefeshToken"
+        //         )
+        //             .then((response) => {
+        //                 console.log("response: ", response);
+        //                 localStorage.setItem(
+        //                     TOKEN,
+        //                     response.data.content.accessToken
+        //                 );
+        //                 navigateHistory.push(window.location.pathname);
+        //             })
+        //             .catch((err) => {
+        //                 console.log("err: ", err);
+        //                 navigateHistory.push("/user/login");
+        //             });
+        //     }
+        // }
 
         switch (err?.response.status) {
             case 400:

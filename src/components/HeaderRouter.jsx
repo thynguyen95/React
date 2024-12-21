@@ -1,13 +1,65 @@
 import { Dropdown } from "flowbite-react";
 import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { TOKEN, USER_LOGIN } from "../services/constants";
 
 // client-side rendering(CSR): Trình duyệt tạo ra HTML, máy chủ chỉ gửi mã JavaScript và dữ liệu.
 // server-side rendering(SSR): Máy chủ tạo ra HTML, trình duyệt chỉ hiển thị HTML đã được tạo ra.
 
 const HeaderRouter = () => {
     const cartStore = useSelector((state) => state.cartSliceReducer.cart);
+    const { userLogin } = useSelector((state) => state.userReducer);
+    const navigate = useNavigate();
+
+    const renderLogin = () => {
+        if (userLogin) {
+            return (
+                <>
+                    <NavLink
+                        to="/profile"
+                        end
+                        className={(props) =>
+                            props.isActive
+                                ? "text-red-500"
+                                : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                        }
+                    >
+                        Hello {userLogin.email}
+                    </NavLink>
+                    <NavLink
+                        className={(props) =>
+                            props.isActive
+                                ? "text-red-500"
+                                : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                        }
+                        onClick={() => {
+                            localStorage.removeItem(TOKEN);
+                            localStorage.removeItem(USER_LOGIN);
+                            // navigate("/user/login");
+                            window.location.reload();
+                        }}
+                    >
+                        Logout
+                    </NavLink>
+                </>
+            );
+        }
+
+        return (
+            <NavLink
+                to="/user/login"
+                end
+                className={(props) =>
+                    props.isActive
+                        ? "text-red-500"
+                        : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                }
+            >
+                User login
+            </NavLink>
+        );
+    };
 
     return (
         <header>
@@ -88,19 +140,6 @@ const HeaderRouter = () => {
 
                             <li>
                                 <NavLink
-                                    to="/user/login"
-                                    end
-                                    className={(props) =>
-                                        props.isActive
-                                            ? "text-red-500"
-                                            : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                                    }
-                                >
-                                    User login
-                                </NavLink>
-                            </li>
-                            <li>
-                                <NavLink
                                     to="/user/register"
                                     end
                                     className={(props) =>
@@ -110,6 +149,19 @@ const HeaderRouter = () => {
                                     }
                                 >
                                     register
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="/react-query"
+                                    end
+                                    className={(props) =>
+                                        props.isActive
+                                            ? "text-red-500"
+                                            : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                    }
+                                >
+                                    react-query
                                 </NavLink>
                             </li>
                             <li>
@@ -171,6 +223,7 @@ const HeaderRouter = () => {
                                     )
                                 </NavLink>
                             </li>
+                            <li>{renderLogin()}</li>
                         </ul>
                     </div>
                 </div>

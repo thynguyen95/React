@@ -50,102 +50,137 @@ import Register from "./pages/Register";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { navigateHistory } from "./services/configURL";
 import Spinner from "./components/Spinner";
+// cấu hình react-query
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// cấu hình react-query-devtool
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ShoeShopQR from "./ReactQueryDemo/ShoeShopQR";
+import RQMasterPage from "./MasterPage/RQMasterPage";
+import UserManagementRQ from "./ReactQueryDemo/UserManagementRQ";
+
+// cấu hình react-query & devtool
+// tương tự store của redux
+const queryClient = new QueryClient();
 
 function App() {
     return (
         <Provider store={store}>
-            <Spinner />
+            <QueryClientProvider client={queryClient}>
+                <ReactQueryDevtools initialIsOpen={true} />
+                <Spinner />
 
-            <HistoryRouter history={navigateHistory}>
-                <Routes>
-                    {/* route base  */}
+                <HistoryRouter history={navigateHistory}>
+                    <Routes>
+                        {/* route base  */}
 
-                    {/* định nghĩa trang chủ  */}
-                    {/* <Route path="" element={<Home />} />
+                        {/* định nghĩa trang chủ  */}
+                        {/* <Route path="" element={<Home />} />
                     <Route index element={<Home />} />
 
                     <Route path="home" element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="cart" element={<Cart />} /> */}
 
-                    {/* nesting router */}
-                    {/* <Route index element={<HomePageMaster />} /> */}
-                    {/* <Route path="/home" element={<HomePageMaster />} /> */}
+                        {/* nesting router */}
+                        {/* <Route index element={<HomePageMaster />} /> */}
+                        {/* <Route path="/home" element={<HomePageMaster />} /> */}
 
-                    <Route path="/" element={<HomePageMaster />}>
-                        <Route index element={<Home />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="profile" element={<Profile />} />
-                        <Route path="search" element={<Search />} />
+                        <Route path="/" element={<HomePageMaster />}>
+                            <Route index element={<Home />} />
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="search" element={<Search />} />
 
-                        <Route
-                            path="redux"
-                            element={
-                                <>
-                                    <h1 className="text-center text-red-500 text-4xl">
-                                        Demo Redux
-                                    </h1>
-                                    <Outlet />
-                                </>
-                            }
-                        >
                             <Route
-                                path="change-number"
-                                element={<ChangeNumberRedux />}
+                                path="redux"
+                                element={
+                                    <>
+                                        <h1 className="text-center text-red-500 text-4xl">
+                                            Demo Redux
+                                        </h1>
+                                        <Outlet />
+                                    </>
+                                }
+                            >
+                                <Route
+                                    path="change-number"
+                                    element={<ChangeNumberRedux />}
+                                />
+                                <Route
+                                    path="change-fontsize"
+                                    element={<ChangFontSizeRedux />}
+                                />
+                            </Route>
+
+                            <Route path="detail">
+                                <Route
+                                    path=":prodID"
+                                    element={<DetailProduct />}
+                                />
+                            </Route>
+                            <Route path="*" element={<Page404 />} />
+                        </Route>
+
+                        <Route path="user" element={<UserPageMaster />}>
+                            {/* <Route path="login" element={<DemoLoginForm />} /> */}
+
+                            {/* demo hook navigate */}
+                            <Route path="login" element={<Login />} />
+
+                            <Route path="register" element={<Register />} />
+                            <Route
+                                path="forgot-pass"
+                                element={<ForgotPass />}
+                            />
+
+                            {/* <Route path="*" element={<Page404 />} /> */}
+                            {/* Navigate: tự chuyển hướng  */}
+                            <Route
+                                path="*"
+                                element={<Navigate to={"../login"} />}
+                            />
+                        </Route>
+
+                        <Route path="admin" element={<AdminMasterPage />}>
+                            <Route index element={<UserManagement />} />
+                            <Route
+                                path="usermanagement"
+                                element={<UserManagement />}
                             />
                             <Route
-                                path="change-fontsize"
-                                element={<ChangFontSizeRedux />}
+                                path="productmanagement"
+                                element={<ProductManagement />}
+                            />
+                            <Route path="product" element={<Product />} />
+                            <Route path="product/:id" element={<Product />} />
+
+                            <Route
+                                path="add-product"
+                                element={<AddProduct />}
+                            />
+                            <Route path="edit-product">
+                                <Route path=":id" element={<EditProduct />} />
+                            </Route>
+
+                            <Route path="*" element={<Page404 />} />
+                        </Route>
+
+                        <Route path="react-query" element={<RQMasterPage />}>
+                            {/* <Route index element={<ShoeShopQR />} /> */}
+                            <Route
+                                path="useClient-demo"
+                                element={<ShoeShopQR />}
+                            />
+                            <Route
+                                path="useMutation-demo"
+                                element={<UserManagementRQ />}
                             />
                         </Route>
-
-                        <Route path="detail">
-                            <Route path=":prodID" element={<DetailProduct />} />
-                        </Route>
-                        <Route path="*" element={<Page404 />} />
-                    </Route>
-
-                    <Route path="user" element={<UserPageMaster />}>
-                        {/* <Route path="login" element={<DemoLoginForm />} /> */}
-
-                        {/* demo hook navigate */}
-                        <Route path="login" element={<Login />} />
-
-                        <Route path="register" element={<Register />} />
-                        <Route path="forgot-pass" element={<ForgotPass />} />
-
-                        {/* <Route path="*" element={<Page404 />} /> */}
-                        {/* Navigate: tự chuyển hướng  */}
-                        <Route
-                            path="*"
-                            element={<Navigate to={"../login"} />}
-                        />
-                    </Route>
-
-                    <Route path="admin" element={<AdminMasterPage />}>
-                        <Route index element={<UserManagement />} />
-                        <Route
-                            path="usermanagement"
-                            element={<UserManagement />}
-                        />
-                        <Route
-                            path="productmanagement"
-                            element={<ProductManagement />}
-                        />
-                        <Route path="product" element={<Product />} />
-                        <Route path="product/:id" element={<Product />} />
-
-                        <Route path="add-product" element={<AddProduct />} />
-                        <Route path="edit-product">
-                            <Route path=":id" element={<EditProduct />} />
-                        </Route>
-
-                        <Route path="*" element={<Page404 />} />
-                    </Route>
-                </Routes>
-            </HistoryRouter>
+                    </Routes>
+                </HistoryRouter>
+            </QueryClientProvider>
         </Provider>
     );
 }

@@ -3,11 +3,13 @@ import { Button, Label, TextInput } from "flowbite-react";
 import { useFormik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { TOKEN, USER_LOGIN } from "../services/configURL";
 import { setCookie } from "../util/setting";
+import { useDispatch } from "react-redux";
+import { loginActionAsync } from "../redux/actions/userActions";
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const frmLogin = useFormik({
         initialValues: {
@@ -32,27 +34,31 @@ const Login = () => {
             // }
 
             // xử lý gửi dữ liệu về api của backend để lấy token lưu vào máy client
-            axios({
-                url: "https://apistore.cybersoft.edu.vn/api/Users/signin",
-                method: "POST",
-                data: values,
-            })
-                .then((res) => {
-                    console.log("res: ", res);
+            // axios({
+            //     url: "https://apistore.cybersoft.edu.vn/api/Users/signin",
+            //     method: "POST",
+            //     data: values,
+            // })
+            //     .then((res) => {
+            //         console.log("res: ", res);
 
-                    // lưu token vào client (localStorage, cookie)
-                    // localStorage(server không lấy được )
-                    const token = res.data.content.accessToken;
-                    const userLogin = JSON.stringify(res.data.content);
-                    localStorage.setItem(TOKEN, token);
-                    localStorage.setItem(USER_LOGIN, userLogin);
+            //         // lưu token vào client (localStorage, cookie)
+            //         // localStorage(server không lấy được )
+            //         const token = res.data.content.accessToken;
+            //         const userLogin = JSON.stringify(res.data.content);
+            //         localStorage.setItem(TOKEN, token);
+            //         localStorage.setItem(USER_LOGIN, userLogin);
 
-                    // lưu vào cookie
-                    setCookie(TOKEN, token, 7);
-                })
-                .catch((err) => {
-                    console.log("err: ", err);
-                });
+            //         // lưu vào cookie
+            //         setCookie(TOKEN, token, 7);
+            //     })
+            //     .catch((err) => {
+            //         console.log("err: ", err);
+            //     });
+
+            // cách 2: sử dụng reduxThunk
+            const actionAsync = loginActionAsync(values);
+            dispatch(actionAsync);
         },
     });
     return (

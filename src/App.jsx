@@ -57,6 +57,10 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ShoeShopQR from "./ReactQueryDemo/ShoeShopQR";
 import RQMasterPage from "./MasterPage/RQMasterPage";
 import UserManagementRQ from "./ReactQueryDemo/UserManagementRQ";
+import HookMasterPage from "./MasterPage/HookMasterPage";
+import UseRefDemo from "./pages/HookToiUuRender/UseRefDemo";
+import UseMemoDemo from "./pages/HookToiUuRender/UseMemoDemo";
+import UseCallBackDemo from "./pages/HookToiUuRender/UseCallBackDemo";
 
 // cấu hình react-query & devtool
 // tương tự store của redux
@@ -176,6 +180,15 @@ function App() {
                             <Route
                                 path="useMutation-demo"
                                 element={<UserManagementRQ />}
+                            />
+                        </Route>
+
+                        <Route path="hook" element={<HookMasterPage />}>
+                            <Route path="useRef" element={<UseRefDemo />} />
+                            <Route path="useMemo" element={<UseMemoDemo />} />
+                            <Route
+                                path="useCallBack"
+                                element={<UseCallBackDemo />}
                             />
                         </Route>
                     </Routes>

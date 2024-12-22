@@ -15,3 +15,16 @@ export const registerAPI = async (userRegister) => {
 
     return res.data.content;
 };
+
+export const getAllUserPagingAPI = async (param) => {
+    console.log("param: ", param);
+    // console.log("queryKey: ", queryKey);
+    const pageSize = param.queryKey[2];
+    const pageIndex = param.queryKey[1];
+
+    const res = await http.get(
+        `https://apistore.cybersoft.edu.vn/api/Users/paging?pageIndex=${pageIndex}&pageSize=${pageSize}`
+    );
+
+    return res.data.content;
+};

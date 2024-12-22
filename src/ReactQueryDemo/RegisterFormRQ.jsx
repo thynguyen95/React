@@ -13,6 +13,7 @@ const RegisterFormRQ = () => {
         email: "",
     });
 
+    // useQueryClient được sử dụng để thao tác trực tiếp với cache của React Query như đồng bộ hóa dữ liệu, xóa cache cũ và làm mới data
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
@@ -21,6 +22,8 @@ const RegisterFormRQ = () => {
         onSuccess: (data) => {
             // khi call api đăng ký thành công data sẽ trả về tại đây
             console.log("data: ", data);
+
+            // Xóa cache và fetch lại dữ liệu
             queryClient.invalidateQueries("getAllUser");
         },
         onError: (err) => {
